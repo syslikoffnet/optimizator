@@ -1,6 +1,6 @@
 package com.duchamp.root
 
-import com.github.topjohnwu.libsu.core.Shell
+import com.topjohnwu.superuser.Shell
 
 /**
  * One-time libsu configuration. Call [configure] from [android.app.Application.onCreate] before

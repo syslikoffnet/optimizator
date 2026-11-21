@@ -1,6 +1,6 @@
 package com.duchamp.root
 
-import com.github.topjohnwu.libsu.core.Shell
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Future
