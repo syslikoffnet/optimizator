@@ -1,4 +1,5 @@
 package com.duchamp.gamemode
+import kotlin.jvm.JvmSuppressWildcards
 
 import com.duchamp.data.gamemode.GameModeEngine
 import com.duchamp.data.repo.JournalRepository
@@ -23,7 +24,7 @@ object GameModeModule {
         profileRepository: ProfileRepository,
         sessionStore: SessionStore,
         journalRepository: JournalRepository,
-        tweaks: List<Tweak>,
+        tweaks: @JvmSuppressWildcards List<Tweak>,
     ): GameModeEngine = GameModeEngine(
         root = runner,
         profileProvider = { profileRepository.current() },

@@ -1,4 +1,5 @@
 package com.duchamp.gamemode
+import kotlin.jvm.JvmSuppressWildcards
 import androidx.lifecycle.ViewModel
 
 import com.duchamp.data.gamemode.GameModeEngine
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameModeViewModel @Inject constructor(
     private val engine: GameModeEngine,
-    private val tweaks: List<Tweak>,
+    private val tweaks: @JvmSuppressWildcards List<Tweak>,
 ) : ViewModel() {
     val state: StateFlow<GameModeState> = engine.state
 

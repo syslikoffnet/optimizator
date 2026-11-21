@@ -1,4 +1,5 @@
 package com.duchamp.system
+import kotlin.jvm.JvmSuppressWildcards
 import androidx.lifecycle.ViewModel
 
 import com.duchamp.data.tweak.Tweak
@@ -17,7 +18,7 @@ data class TweakRow(
 
 @HiltViewModel
 class SystemViewModel @Inject constructor(
-    private val tweaks: List<Tweak>,
+    private val tweaks: @JvmSuppressWildcards List<Tweak>,
 ) : ViewModel() {
     private val _rows = MutableStateFlow<List<TweakRow>>(emptyList())
     val rows: StateFlow<List<TweakRow>> = _rows.asStateFlow()

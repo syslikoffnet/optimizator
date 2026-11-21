@@ -1,4 +1,5 @@
 package com.duchamp.data.gamemode
+import kotlin.jvm.JvmSuppressWildcards
 
 import com.duchamp.data.profile.GameProfile
 import com.duchamp.data.repo.JournalRepository
@@ -85,7 +86,7 @@ class GameModeEngine(
     private val profileProvider: suspend () -> GameProfile,
     private val sessionStore: SessionStore,
     private val journal: JournalRepository,
-    private val tweaks: List<Tweak>,
+    private val tweaks: @JvmSuppressWildcards List<Tweak>,
     private val clock: () -> Long = System::currentTimeMillis,
 ) {
     private val _state = MutableStateFlow(GameModeState())
