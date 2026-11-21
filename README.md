@@ -135,6 +135,7 @@ test (`BootScriptGeneratorTest`).
 ---
 
 ## What duchamp never touches
+<!-- ci-nudge -->
 
 The following are hard-excluded and never modified, to keep the system stable and respect the user:
 
