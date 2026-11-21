@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ main, arena/306d551e-optimizator ]
+    branches: [ main ]
     tags: [ 'v*' ]
   pull_request:
   workflow_dispatch:

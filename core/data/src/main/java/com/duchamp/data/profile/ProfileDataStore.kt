@@ -81,10 +81,13 @@ class ProfileDataStore @Inject constructor(
         private fun parseActions(raw: String): Map<String, GameAction> =
             raw.split(",")
                 .mapNotNull { entry ->
-                    val (pkg, action) = entry.split(":")
+                    val parts = entry.split(":")
+                    if (parts.size < 2) return@mapNotNull null
+                    val pkg = parts[0]
+                    val action = parts[1]
                     pkg.takeIf { it.isNotBlank() }?.let {
                         runCatching { GameAction.valueOf(action) }.getOrNull()
-                    }?.let { it to pkg }
+                    }?.let { pkg to it }
                 }
                 .toMap()
 
