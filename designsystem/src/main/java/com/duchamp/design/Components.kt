@@ -163,5 +163,6 @@ fun DotIndicator(
     color: Color,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.size(6.dp).border(BorderStroke(1.dp, SolidColor(color)), ChipShape), contentAlignment = Alignment.Center)
+    Box(modifier = modifier.size(6.dp).border(BorderStroke(1.dp, SolidColor(color)), ChipShape), contentAlignment = Alignment.Center) {
+        }
 }
