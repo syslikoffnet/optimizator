@@ -62,11 +62,11 @@ fun generateBootScript(config: BootScriptConfig): String = buildString {
     appendLine("    settings put global \$name \$want 2>/dev/null && log \"\$name=\$want: re-applied\" || log \"\$name=\$want: FAIL\"")
     appendLine("  fi")
     appendLine("}")
-    config.wifiScanAlways?.let { appendLine("check_setting wifi_scan_always_enabled \$it") }
-    config.bleScanAlways?.let { appendLine("check_setting ble_scan_always_enabled \$it") }
-    config.windowAnimation?.let { appendLine("check_setting window_animation_scale \$it") }
-    config.transitionAnimation?.let { appendLine("check_setting transition_animation_scale \$it") }
-    config.animatorAnimation?.let { appendLine("check_setting animator_animation_scale \$it") }
+    config.wifiScanAlways?.let { appendLine("check_setting wifi_scan_always_enabled \$$it") }
+    config.bleScanAlways?.let { appendLine("check_setting ble_scan_always_enabled \$$it") }
+    config.windowAnimation?.let { appendLine("check_setting window_animation_scale \$$it") }
+    config.transitionAnimation?.let { appendLine("check_setting transition_animation_scale \$$it") }
+    config.animatorAnimation?.let { appendLine("check_setting animator_animation_scale \$$it") }
     appendLine()
     appendLine("log \"boot done\"")
     appendLine("exit 0")
