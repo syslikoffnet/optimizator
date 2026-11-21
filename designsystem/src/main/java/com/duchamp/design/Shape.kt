@@ -13,12 +13,12 @@ val SurfaceShape = RoundedCornerShape(24.dp)
 val ChipShape = RoundedCornerShape(10.dp)
 
 val DuchampShapes = Shapes(
+    extraSmall = RoundedCornerShape(8.dp),
     small = ChipShape,
     medium = CardShape,
     large = SurfaceShape,
     extraLarge = RoundedCornerShape(32.dp),
-    smallIncreased = RoundedCornerShape(12.dp),
-    mediumIncreased = RoundedCornerShape(20.dp),
     largeIncreased = RoundedCornerShape(28.dp),
     extraLargeIncreased = RoundedCornerShape(36.dp),
+    extraExtraLarge = RoundedCornerShape(44.dp),
 )

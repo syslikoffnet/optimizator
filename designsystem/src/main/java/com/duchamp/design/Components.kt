@@ -53,7 +53,7 @@ fun StatusChip(
         shape = ChipShape,
         color = Color.Transparent,
         contentColor = kind.color(),
-        border = BorderStroke(1.dp, kind.color().copy(alpha = 0.4)),
+        border = BorderStroke(1.dp, kind.color().copy(alpha = 0.4f)),
         modifier = modifier,
     ) {
         Text(
@@ -162,5 +162,5 @@ fun DotIndicator(
     color: Color,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.size(6.dp).border(1.dp, color, ChipShape), contentAlignment = Alignment.Center)
+    Box(modifier = modifier.size(6.dp).border(BorderStroke(1.dp, color), ChipShape), contentAlignment = Alignment.Center)
 }
