@@ -1,5 +1,6 @@
 package com.duchamp.design
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,12 +52,12 @@ fun StatusChip(
     Surface(
         shape = ChipShape,
         color = Color.Transparent,
-        contentColor = color(),
-        border = androidx.compose.foundation.border.BorderStroke(1.dp, color().copy(alpha = 0.4)),
+        contentColor = kind.color(),
+        border = BorderStroke(1.dp, kind.color().copy(alpha = 0.4)),
         modifier = modifier,
     ) {
         Text(
-            text = label(),
+            text = kind.label(),
             style = MaterialTheme.typography.labelSmall,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
         )
@@ -102,7 +103,7 @@ fun DataCard(
         shape = CardShape,
         color = DuchampColor.Surface,
         contentColor = DuchampColor.TextPrimary,
-        border = androidx.compose.foundation.border.BorderStroke(1.dp, DuchampColor.Hairline),
+        border = BorderStroke(1.dp, DuchampColor.Hairline),
         modifier = modifier,
     ) {
         content()
@@ -135,7 +136,7 @@ fun Pill(
         shape = ChipShape,
         color = DuchampColor.SurfaceRaised,
         contentColor = DuchampColor.TextSecondary,
-        border = androidx.compose.foundation.border.BorderStroke(1.dp, DuchampColor.Hairline),
+        border = BorderStroke(1.dp, DuchampColor.Hairline),
         modifier = modifier,
     ) {
         Text(
