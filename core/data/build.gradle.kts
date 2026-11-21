@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.androidx.annotation)
 
     ksp(libs.androidx.room.compiler)
+    implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
