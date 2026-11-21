@@ -15,11 +15,11 @@ import javax.inject.Inject
 
 /** One-time setup: verify the device, pick audio/messenger apps, choose toggles, finish. */
 @HiltViewModel
-class OnboardingViewModel : ViewModel() @Inject constructor(
+class OnboardingViewModel @Inject constructor(
     private val runner: CommandRunner,
     private val reader: DeviceReader,
     private val profileRepository: ProfileRepository,
-) {
+) : ViewModel() {
     private val availability = RootAvailability(runner)
 
     private val _rootStatus = MutableStateFlow(RootAvailability.Status(false, false, ""))

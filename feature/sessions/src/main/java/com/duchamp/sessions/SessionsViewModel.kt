@@ -29,9 +29,9 @@ data class SessionReport(
 }
 
 @HiltViewModel
-class SessionsViewModel : ViewModel() @Inject constructor(
+class SessionsViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
-) {
+) : ViewModel() {
     private val _sessions = MutableStateFlow<List<SessionEntity>>(emptyList())
     val sessions: StateFlow<List<SessionEntity>> = _sessions.asStateFlow()
 

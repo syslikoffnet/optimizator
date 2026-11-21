@@ -16,9 +16,9 @@ data class TweakRow(
 )
 
 @HiltViewModel
-class SystemViewModel : ViewModel() @Inject constructor(
+class SystemViewModel @Inject constructor(
     private val tweaks: List<Tweak>,
-) {
+) : ViewModel() {
     private val _rows = MutableStateFlow<List<TweakRow>>(emptyList())
     val rows: StateFlow<List<TweakRow>> = _rows.asStateFlow()
 

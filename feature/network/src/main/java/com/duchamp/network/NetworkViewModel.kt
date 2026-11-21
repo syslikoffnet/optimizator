@@ -20,9 +20,9 @@ data class NetworkSnapshot(
 )
 
 @HiltViewModel
-class NetworkViewModel : ViewModel() @Inject constructor(
+class NetworkViewModel @Inject constructor(
     private val reader: DeviceReader,
-) {
+) : ViewModel() {
     private val _snapshot = MutableStateFlow(NetworkSnapshot())
     val snapshot: StateFlow<NetworkSnapshot> = _snapshot.asStateFlow()
 

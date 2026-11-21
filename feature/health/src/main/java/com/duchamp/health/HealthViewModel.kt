@@ -25,9 +25,9 @@ data class HealthSnapshot(
 )
 
 @HiltViewModel
-class HealthViewModel : ViewModel() @Inject constructor(
+class HealthViewModel @Inject constructor(
     private val reader: DeviceReader,
-) {
+) : ViewModel() {
     private val _snapshot = MutableStateFlow(HealthSnapshot())
     val snapshot: StateFlow<HealthSnapshot> = _snapshot.asStateFlow()
 

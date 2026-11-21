@@ -13,10 +13,10 @@ import javax.inject.Inject
  * [GameModeEngine], which owns the state machine and the journal.
  */
 @HiltViewModel
-class GameModeViewModel : ViewModel() @Inject constructor(
+class GameModeViewModel @Inject constructor(
     private val engine: GameModeEngine,
     private val tweaks: List<Tweak>,
-) {
+) : ViewModel() {
     val state: StateFlow<GameModeState> = engine.state
 
     suspend fun start(): Boolean = engine.start()

@@ -27,10 +27,10 @@ data class TelemetrySample(
  * game-mode session is active it also persists the samples, so the post-game report has real data.
  */
 @HiltViewModel
-class MonitorViewModel : ViewModel() @Inject constructor(
+class MonitorViewModel @Inject constructor(
     private val reader: DeviceReader,
     private val sessionRepository: SessionRepository,
-) {
+) : ViewModel() {
     private var job: Job? = null
 
     private val _samples = MutableStateFlow<List<TelemetrySample>>(emptyList())
