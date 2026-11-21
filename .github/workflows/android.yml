@@ -59,6 +59,10 @@ jobs:
             grep -E "FAILED|FAILURE:|What went wrong|Caused by" /tmp/gradle.log | tail -n 40 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
+            echo "::error::Test failure details:"
+            grep -A 6 -E "ComparisonFailure|AssertionError|expected:<|but was:<" /tmp/gradle.log | tail -n 120 | while IFS= read -r line; do
+              printf '::error::%s\n' "$line"
+            done
           }
 
       - name: Upload release APK

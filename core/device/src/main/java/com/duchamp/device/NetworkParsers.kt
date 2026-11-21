@@ -35,7 +35,9 @@ private val WIFI_FREQ = Regex("""Frequency:\s*(\d+)MHz""")
 private val WIFI_STANDARD = Regex("""Wi-Fi standard:\s*(\S+)""")
 
 fun parseWifiStatus(raw: String): WifiStatus? {
-    val ssid = WIFI_SSID.find(raw)?.let { it.groupValues.firstOrNull { g -> g.isNotEmpty() } }
+    val ssid = WIFI_SSID.find(raw)?.let { m ->
+        m.groupValues.drop(1).firstOrNull { g -> g.isNotEmpty() }
+    }
     val rssi = WIFI_RSSI.find(raw)?.groupValues?.get(1)?.toIntOrNull()
     val link = WIFI_LINK.find(raw)?.groupValues?.get(1)
     val freq = WIFI_FREQ.find(raw)?.groupValues?.get(1)?.toIntOrNull()
