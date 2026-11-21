@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 /** A single 1 Hz telemetry sample for the live chart. */
 data class TelemetrySample(
