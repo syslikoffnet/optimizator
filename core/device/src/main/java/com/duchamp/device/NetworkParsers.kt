@@ -30,7 +30,7 @@ fun parsePing(raw: String): PingResult? {
 
 private val WIFI_SSID = Regex("""Wifi is connected to "([^"]*)"|SSID:\s*"([^"]*)"""")
 private val WIFI_RSSI = Regex("""RSSI:\s*(-?\d+)""")
-private val WIFI_LINK = Regex("""Link speed:\s*(\S+)""")
+private val WIFI_LINK = Regex("""Link speed:\s*(\d+(?:\.\d+)?\s*Mbps)""")
 private val WIFI_FREQ = Regex("""Frequency:\s*(\d+)MHz""")
 private val WIFI_STANDARD = Regex("""Wi-Fi standard:\s*(\S+)""")
 
