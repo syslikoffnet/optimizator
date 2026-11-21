@@ -70,7 +70,7 @@ class SessionRepository @Inject constructor(
         sessionDao.finish(
             id = sessionId,
             endMillis = endMillis,
-            durationSec = maxOf(0L, (endMillis - started?.startMillis ?: endMillis) / 1000),
+            durationSec = maxOf(0L, (endMillis - (started?.startMillis ?: endMillis)) / 1000),
             summary = summary,
         )
     }

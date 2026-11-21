@@ -129,13 +129,13 @@ class BaselineRepository @Inject constructor(
         val o = JSONObject(raw)
         BaselineSnapshot(
             capturedAtMillis = o.optLong("capturedAtMillis"),
-            swappiness = o.optNull("swappiness") as? Int,
-            wifiScanAlways = o.optNull("wifiScanAlways") as? String,
-            bleScanAlways = o.optNull("bleScanAlways") as? String,
-            windowAnimation = o.optNull("windowAnimation") as? String,
-            transitionAnimation = o.optNull("transitionAnimation") as? String,
-            animatorAnimation = o.optNull("animatorAnimation") as? String,
-            batteryCmd = o.optNull("batteryCmd") as? String,
+            swappiness = o.opt("swappiness") as? Int,
+            wifiScanAlways = o.opt("wifiScanAlways") as? String,
+            bleScanAlways = o.opt("bleScanAlways") as? String,
+            windowAnimation = o.opt("windowAnimation") as? String,
+            transitionAnimation = o.opt("transitionAnimation") as? String,
+            animatorAnimation = o.opt("animatorAnimation") as? String,
+            batteryCmd = o.opt("batteryCmd") as? String,
             disabledPackages = o.optJSONArray("disabledPackages")?.let { arr ->
                 (0 until arr.length()).map { arr.getString(it) }
             } ?: emptyList(),
