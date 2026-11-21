@@ -196,3 +196,5 @@ Unit tests run in CI (`testDebugUnitTest`) and cover:
 ## License
 
 Provided as-is for the `duchamp` device. Use responsibly — root access can damage your device.
+
+<!-- ci-nudge: re-trigger CI after branch restore -->
