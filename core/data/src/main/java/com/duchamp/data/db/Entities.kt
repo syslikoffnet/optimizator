@@ -66,6 +66,13 @@ data class JournalEntryEntity(
     val atMillis: Long,
     val status: String,
     val risk: String,
+    /**
+     * The real raw value of this tweak *before* it was applied in this session (e.g. the
+     * `settings get global <key>` output captured just before `apply`). Revert uses it to restore
+     * the pre-change value; without it a revert would write back the already-applied value and do
+     * nothing. Empty for entries written before this field existed.
+     */
+    val previousRaw: String = "",
 )
 
 /** A marker drawn on a session chart (throttle start, charge disconnect, thermal step, ...). */

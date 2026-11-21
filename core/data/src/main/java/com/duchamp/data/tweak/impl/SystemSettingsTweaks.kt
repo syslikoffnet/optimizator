@@ -29,7 +29,9 @@ abstract class GlobalSettingTweak(
         if (!result.success) return TweakState.unavailable(detail = "settings get $key не доступно")
         val value = result.stdout.trim()
         return if (value.isEmpty()) {
-            TweakState.off("не задано")
+            // rawValue stays blank (the real read is empty) so a revert writes nothing back;
+            // the human-readable note goes to detail, not into the value that gets restored.
+            TweakState.off("", detail = "не задано")
         } else if (value == desired) {
             TweakState.on(value)
         } else {

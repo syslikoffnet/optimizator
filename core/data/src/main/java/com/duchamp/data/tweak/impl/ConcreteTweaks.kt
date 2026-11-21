@@ -121,20 +121,26 @@ class BatteryBypassTweak(
     }
 
     override suspend fun apply(): Result<Unit> {
-        val result = runner.run("echo '0 0' > ${DevicePaths.BATTERY_CMD}")
+        // Bypass ON: the charger powers the phone but stops feeding the battery (`0 1`).
+        val result = runner.run("echo '0 1' > ${DevicePaths.BATTERY_CMD}")
         return if (result.success) Result.success(Unit) else Result.failure(IllegalStateException(result.stderr))
     }
 
     override suspend fun verify(): Boolean =
-        runner.run("cat ${DevicePaths.BATTERY_CMD}").stdout.trim().let { it == "0 0" }
+        runner.run("cat ${DevicePaths.BATTERY_CMD}").stdout.trim() == "0 1"
+
+    /** Restore the pre-session value; if unknown, fall back to bypass OFF (`0 0`) — never leave on. */
+    private fun restoreValue(from: TweakState): String = from.rawValue.ifBlank { "0 0" }
 
     override suspend fun revert(from: TweakState): Result<Unit> {
-        val result = runner.run("echo '0 0' > ${DevicePaths.BATTERY_CMD}")
+        val value = restoreValue(from)
+        val result = runner.run("echo '$value' > ${DevicePaths.BATTERY_CMD}")
         return if (result.success) Result.success(Unit) else Result.failure(IllegalStateException(result.stderr))
     }
 
-    override fun applyCommands(): List<String> = listOf("echo '0 0' > ${DevicePaths.BATTERY_CMD}")
-    override fun revertCommands(from: TweakState): List<String> = applyCommands()
+    override fun applyCommands(): List<String> = listOf("echo '0 1' > ${DevicePaths.BATTERY_CMD}")
+    override fun revertCommands(from: TweakState): List<String> =
+        listOf("echo '${restoreValue(from)}' > ${DevicePaths.BATTERY_CMD}")
 }
 
 /**

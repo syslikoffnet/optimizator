@@ -21,6 +21,8 @@ data class BaselineSnapshot(
     val windowAnimation: String?,
     val transitionAnimation: String?,
     val animatorAnimation: String?,
+    val vibrateWhenCalls: String?,
+    val hapticFeedback: String?,
     val batteryCmd: String?,
     val disabledPackages: List<String>,
 )
@@ -55,6 +57,8 @@ class BaselineRepository @Inject constructor(
             windowAnimation = settingsGet(DevicePaths.WINDOW_ANIMATION_SCALE),
             transitionAnimation = settingsGet(DevicePaths.TRANSITION_ANIMATION_SCALE),
             animatorAnimation = settingsGet(DevicePaths.ANIMTOR_ANIMATION_SCALE),
+            vibrateWhenCalls = settingsGet(DevicePaths.VIBRATE_WHEN_CALLS),
+            hapticFeedback = settingsGet(DevicePaths.HAPTIC_FEEDBACK_ENABLED),
             batteryCmd = cat(DevicePaths.BATTERY_CMD),
             disabledPackages = reader.readDisabledPackages(),
         )
@@ -96,6 +100,8 @@ class BaselineRepository @Inject constructor(
             DevicePaths.WINDOW_ANIMATION_SCALE to snapshot.windowAnimation,
             DevicePaths.TRANSITION_ANIMATION_SCALE to snapshot.transitionAnimation,
             DevicePaths.ANIMTOR_ANIMATION_SCALE to snapshot.animatorAnimation,
+            DevicePaths.VIBRATE_WHEN_CALLS to snapshot.vibrateWhenCalls,
+            DevicePaths.HAPTIC_FEEDBACK_ENABLED to snapshot.hapticFeedback,
         ).forEach { (setting, value) ->
             value?.let { v ->
                 if (runner.run("settings put global $setting $v").success) restored++
@@ -105,6 +111,26 @@ class BaselineRepository @Inject constructor(
         // Battery bypass must never be left on outside a session.
         if (runner.run("echo ${DevicePaths.BATTERY_CMD_DISABLE} > ${DevicePaths.BATTERY_CMD}").success) restored++
         return RestoreResult(restored = restored, errors = errors)
+    }
+
+    /**
+     * Maps each tweak id to the baseline raw value it should be restored to. Used by the per-tweak
+     * revert so a tweak goes back to the system's pre-duchamp value rather than its current
+     * (already-applied) state. Tweaks without a baseline entry are absent from the map.
+     */
+    suspend fun baselineValues(): Map<String, String> {
+        val snapshot = load() ?: return emptyMap()
+        return mapOf(
+            "wifi_scan_always" to snapshot.wifiScanAlways,
+            "ble_scan_always" to snapshot.bleScanAlways,
+            "window_animation" to snapshot.windowAnimation,
+            "transition_animation" to snapshot.transitionAnimation,
+            "animator_animation" to snapshot.animatorAnimation,
+            "vibration" to snapshot.vibrateWhenCalls,
+            "touch_feedback" to snapshot.hapticFeedback,
+            "swappiness" to snapshot.swappiness?.toString(),
+            "battery_bypass" to snapshot.batteryCmd,
+        ).filterValues { it != null }.mapValues { (_, v) -> v!! }
     }
 
     private suspend fun settingsGet(name: String): String? =
@@ -121,6 +147,8 @@ class BaselineRepository @Inject constructor(
         put("windowAnimation", s.windowAnimation)
         put("transitionAnimation", s.transitionAnimation)
         put("animatorAnimation", s.animatorAnimation)
+        put("vibrateWhenCalls", s.vibrateWhenCalls)
+        put("hapticFeedback", s.hapticFeedback)
         put("batteryCmd", s.batteryCmd)
         put("disabledPackages", s.disabledPackages)
     }.toString()
@@ -135,6 +163,8 @@ class BaselineRepository @Inject constructor(
             windowAnimation = o.opt("windowAnimation") as? String,
             transitionAnimation = o.opt("transitionAnimation") as? String,
             animatorAnimation = o.opt("animatorAnimation") as? String,
+            vibrateWhenCalls = o.opt("vibrateWhenCalls") as? String,
+            hapticFeedback = o.opt("hapticFeedback") as? String,
             batteryCmd = o.opt("batteryCmd") as? String,
             disabledPackages = o.optJSONArray("disabledPackages")?.let { arr ->
                 (0 until arr.length()).map { arr.getString(it) }

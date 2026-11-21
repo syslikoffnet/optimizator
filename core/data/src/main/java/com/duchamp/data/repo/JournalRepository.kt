@@ -52,6 +52,7 @@ class JournalRepository @Inject constructor(
         tweak: Tweak,
         command: String,
         atMillis: Long,
+        previousRaw: String = "",
     ): Long = dao.insert(
         JournalEntryEntity(
             sessionId = sessionId,
@@ -65,6 +66,7 @@ class JournalRepository @Inject constructor(
             atMillis = atMillis,
             status = JournalStatus.PENDING.name,
             risk = tweak.risk.name,
+            previousRaw = previousRaw,
         ),
     )
 

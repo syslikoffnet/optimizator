@@ -64,6 +64,8 @@ object DevicePaths {
     const val WINDOW_ANIMATION_SCALE = "window_animation_scale"
     const val TRANSITION_ANIMATION_SCALE = "transition_animation_scale"
     const val ANIMTOR_ANIMATION_SCALE = "animator_animation_scale"
+    const val VIBRATE_WHEN_CALLS = "vibrate_when_calls"
+    const val HAPTIC_FEEDBACK_ENABLED = "haptic_feedback_enabled"
 
     // --- PUBG / target game ---
     const val GAME_PACKAGE = "com.tencent.ig"

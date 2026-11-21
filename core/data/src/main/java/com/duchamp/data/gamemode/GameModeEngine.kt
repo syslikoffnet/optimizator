@@ -6,6 +6,7 @@ import com.duchamp.data.repo.JournalRepository
 import com.duchamp.data.repo.SessionStore
 import com.duchamp.data.tweak.Risk
 import com.duchamp.data.tweak.Tweak
+import com.duchamp.data.tweak.TweakState
 import com.duchamp.root.CommandResult
 import com.duchamp.root.CommandRunner
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -176,9 +177,12 @@ class GameModeEngine(
                 "Сброс «${tweak.title}»",
                 0.9f + 0.08f * index / maxOf(1, applied.size),
             )
-            val entryId = journal.forSession(sessionId).firstOrNull { it.tweakId == id }?.id ?: 0
+            val entry = journal.forSession(sessionId).firstOrNull { it.tweakId == id }
+            val entryId = entry?.id ?: 0
             val result = runCatching {
-                val previous = tweak.snapshot()
+                // Restore the value captured *before* this session applied the tweak, not the
+                // current (already-applied) state — that's what actually undoes the change.
+                val previous = TweakState.off(entry?.previousRaw ?: "")
                 tweak.revert(previous)
             }
             if (result.isSuccess) {
@@ -205,7 +209,8 @@ class GameModeEngine(
         if (sessionId != null) {
             for (id in journal.appliedTweaks(sessionId)) {
                 val tweak = tweaks.firstOrNull { it.id == id } ?: continue
-                runCatching { tweak.revert(tweak.snapshot()) }
+                val entry = journal.forSession(sessionId).firstOrNull { it.tweakId == id }
+                runCatching { tweak.revert(TweakState.off(entry?.previousRaw ?: "")) }
             }
             sessionStore.addEvent(sessionId, clock(), "fail", message)
             sessionStore.finish(sessionId, clock(), "Сбой: $message")
@@ -227,8 +232,12 @@ class GameModeEngine(
         commandFailures: MutableList<String>,
     ): TweakOutcome {
         val commands = tweak.applyCommands()
+        // Capture the real pre-change value before touching the system. Revert restores *this*
+        // (not the just-applied value), otherwise a revert would write the applied value back and
+        // do nothing — leaving the tweak stuck on.
+        val before = tweak.snapshot()
         // Record the exact commands first so the journal survives a crash mid-run.
-        val entryId = journal.recordPending(sessionId, tweak, commands.joinToString("\n"), clock())
+        val entryId = journal.recordPending(sessionId, tweak, commands.joinToString("\n"), clock(), before.rawValue)
         for (command in commands) {
             if (!runPackageCommand(command, commandFailures)) {
                 journal.markFailed(entryId, CommandResult.failure("${tweak.id}: команда не выполнена"))
