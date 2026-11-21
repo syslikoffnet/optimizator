@@ -208,12 +208,13 @@ class GameModeEngine(
             sessionStore.addEvent(sessionId, clock(), "fail", message)
             sessionStore.finish(sessionId, clock(), "Сбой: $message")
         }
+        val previous = _state.value.result
         _state.value = GameModeState(
             phase = GameModePhase.FAILED,
             progress = _state.value.progress,
             message = message,
             error = message,
-            result = _state.value.result?.copy(failed = _state.value.result.failed + message),
+            result = previous?.copy(failed = previous.failed + message),
         )
         return false
     }
