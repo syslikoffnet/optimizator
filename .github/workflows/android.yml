@@ -38,7 +38,9 @@ jobs:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-        run: ./gradlew lintDebug testDebugUnitTest assembleRelease --no-daemon --console=plain --stacktrace 2>&1 | tee /tmp/gradle.log
+        run: |
+          set -o pipefail
+          ./gradlew lintDebug testDebugUnitTest assembleRelease --no-daemon --console=plain --stacktrace 2>&1 | tee /tmp/gradle.log
 
       - name: Upload gradle log
         if: always()
