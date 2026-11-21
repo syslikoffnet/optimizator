@@ -1,4 +1,5 @@
 package com.duchamp.gamemode
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.data.gamemode.GameModeEngine
 import com.duchamp.data.gamemode.GameModeState
@@ -12,7 +13,7 @@ import javax.inject.Inject
  * [GameModeEngine], which owns the state machine and the journal.
  */
 @HiltViewModel
-class GameModeViewModel @Inject constructor(
+class GameModeViewModel : ViewModel() @Inject constructor(
     private val engine: GameModeEngine,
     private val tweaks: List<Tweak>,
 ) {

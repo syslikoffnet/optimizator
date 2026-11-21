@@ -1,4 +1,5 @@
 package com.duchamp.onboarding
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.data.profile.GameAction
 import com.duchamp.data.profile.GameProfile
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 /** One-time setup: verify the device, pick audio/messenger apps, choose toggles, finish. */
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class OnboardingViewModel : ViewModel() @Inject constructor(
     private val runner: CommandRunner,
     private val reader: DeviceReader,
     private val profileRepository: ProfileRepository,

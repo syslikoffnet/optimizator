@@ -1,4 +1,5 @@
 package com.duchamp.network
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.device.DeviceReader
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ data class NetworkSnapshot(
 )
 
 @HiltViewModel
-class NetworkViewModel @Inject constructor(
+class NetworkViewModel : ViewModel() @Inject constructor(
     private val reader: DeviceReader,
 ) {
     private val _snapshot = MutableStateFlow(NetworkSnapshot())

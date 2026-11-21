@@ -1,4 +1,5 @@
 package com.duchamp.sessions
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.data.db.EventMarkerEntity
 import com.duchamp.data.db.MetricSampleEntity
@@ -28,7 +29,7 @@ data class SessionReport(
 }
 
 @HiltViewModel
-class SessionsViewModel @Inject constructor(
+class SessionsViewModel : ViewModel() @Inject constructor(
     private val sessionRepository: SessionRepository,
 ) {
     private val _sessions = MutableStateFlow<List<SessionEntity>>(emptyList())

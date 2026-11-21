@@ -1,4 +1,5 @@
 package com.duchamp.monitor
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.device.DeviceReader
 import com.duchamp.data.repo.SessionRepository
@@ -26,7 +27,7 @@ data class TelemetrySample(
  * game-mode session is active it also persists the samples, so the post-game report has real data.
  */
 @HiltViewModel
-class MonitorViewModel @Inject constructor(
+class MonitorViewModel : ViewModel() @Inject constructor(
     private val reader: DeviceReader,
     private val sessionRepository: SessionRepository,
 ) {

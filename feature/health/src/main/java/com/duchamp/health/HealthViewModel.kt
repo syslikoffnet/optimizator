@@ -1,4 +1,5 @@
 package com.duchamp.health
+import androidx.lifecycle.ViewModel
 
 import com.duchamp.device.DeviceReader
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ data class HealthSnapshot(
 )
 
 @HiltViewModel
-class HealthViewModel @Inject constructor(
+class HealthViewModel : ViewModel() @Inject constructor(
     private val reader: DeviceReader,
 ) {
     private val _snapshot = MutableStateFlow(HealthSnapshot())
