@@ -1,5 +1,6 @@
 package com.duchamp.monitor
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.duchamp.device.DeviceReader
 import com.duchamp.data.repo.SessionRepository
