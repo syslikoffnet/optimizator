@@ -51,16 +51,16 @@ jobs:
         if: failure()
         run: |
           {
-            echo "::error::Gradle build failed. Error blocks:"
-            grep -A 12 -E "^e: file|^e: " /tmp/gradle.log | tail -n 200 | while IFS= read -r line; do
+            echo "::error::=== FAILURE: What went wrong (with context) ==="
+            grep -A 25 -E "What went wrong|Caused by|FAILURE: Build failed|BUILD FAILED" /tmp/gradle.log | tail -n 250 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
-            echo "::error::Summary lines:"
-            grep -E "FAILED|FAILURE:|What went wrong|Caused by" /tmp/gradle.log | tail -n 40 | while IFS= read -r line; do
+            echo "::error::=== FAILURE: compile/test errors ==="
+            grep -A 12 -E "^e: file|ComparisonFailure|AssertionError|expected:<|but was:<|> Task .* FAILED" /tmp/gradle.log | tail -n 200 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
-            echo "::error::Test failure details:"
-            grep -A 6 -E "ComparisonFailure|AssertionError|expected:<|but was:<" /tmp/gradle.log | tail -n 120 | while IFS= read -r line; do
+            echo "::error::=== FAILURE: log tail ==="
+            tail -n 60 /tmp/gradle.log | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
           }
