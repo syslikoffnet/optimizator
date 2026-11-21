@@ -11,8 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +33,7 @@ import com.duchamp.design.StatusChip
 import com.duchamp.design.StatusKind
 import kotlinx.coroutines.launch
 
-/** Wi-Fi state, gateway, latency to the game server and VPN presence. */
+/** Wi-Fi state, gateway, latency to the gateway, low-latency mode and VPN presence. */
 @Composable
 fun NetworkScreen(
     modifier: Modifier = Modifier,
@@ -40,6 +41,7 @@ fun NetworkScreen(
 ) {
     val snapshot by viewModel.snapshot.collectAsStateWithLifecycle()
     val pinging by viewModel.pinging.collectAsStateWithLifecycle()
+    val busy by viewModel.busy.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
@@ -87,7 +89,9 @@ fun NetworkScreen(
             Spacer(Modifier.height(16.dp))
             DataCard(modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
-                    SectionLabel("PING · game.epicgames.com")
+                    SectionLabel("PING · шлюз")
+                    Spacer(Modifier.height(4.dp))
+                    MonoText(snapshot.gateway.ifBlank { "—" })
                     Spacer(Modifier.height(8.dp))
                     MonoText(
                         snapshot.pingMs?.let { "среднее: %.1f мс".format(it) } ?: "не измерено",
@@ -96,11 +100,41 @@ fun NetworkScreen(
                         Spacer(Modifier.height(4.dp))
                         MonoText("потери: %.0f%%".format(it))
                     }
+
+                    if (snapshot.pingOffMs != null || snapshot.pingOnMs != null) {
+                        Spacer(Modifier.height(12.dp))
+                        SectionLabel("Сравнение · низкая задержка")
+                        Spacer(Modifier.height(4.dp))
+                        MonoText("ВЫКЛ: ${snapshot.pingOffMs?.let { "%.1f мс".format(it) } ?: "—"}")
+                        Spacer(Modifier.height(2.dp))
+                        MonoText("ВКЛ: ${snapshot.pingOnMs?.let { "%.1f мс".format(it) } ?: "—"}")
+                    }
+
                     Spacer(Modifier.height(12.dp))
-                    OutlinedButton(
-                        onClick = { scope.launch { viewModel.ping("game.epicgames.com") } },
-                        enabled = !pinging,
-                    ) { Text(if (pinging) "Измерение…" else "Измерить ping") }
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text("Низкая задержка", style = MaterialTheme.typography.labelMedium)
+                        Switch(
+                            checked = snapshot.lowLatency,
+                            onCheckedChange = { scope.launch { viewModel.setLowLatency(it) } },
+                            enabled = busy.isEmpty(),
+                        )
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(
+                            onClick = { scope.launch { viewModel.ping() } },
+                            enabled = !pinging,
+                        ) { Text(if (pinging) "Измерение…" else "Измерить ping") }
+                        OutlinedButton(
+                            onClick = { scope.launch { viewModel.compare() } },
+                            enabled = !pinging,
+                        ) { Text("A/B: ВЫКЛ/ВКЛ") }
+                    }
                 }
             }
         }

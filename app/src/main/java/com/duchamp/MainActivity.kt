@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Gamepad
@@ -35,6 +36,7 @@ import com.duchamp.data.repo.ProfileRepository
 import com.duchamp.design.DuchampColor
 import com.duchamp.design.DuchampTheme
 import com.duchamp.gamemode.GameModeScreen
+import com.duchamp.gamemode.TaskManagerScreen
 import com.duchamp.health.HealthScreen
 import com.duchamp.monitor.MonitorScreen
 import com.duchamp.network.NetworkScreen
@@ -111,6 +113,9 @@ private fun AppRoot(profileRepository: ProfileRepository) {
                 composable(DuchampDestination.GAME_MODE.route) {
                     GameModeScreen(modifier = Modifier.fillMaxSize())
                 }
+                composable(DuchampDestination.TASKS.route) {
+                    TaskManagerScreen(modifier = Modifier.fillMaxSize())
+                }
                 composable(DuchampDestination.MONITOR.route) {
                     MonitorScreen(modifier = Modifier.fillMaxSize())
                 }
@@ -134,6 +139,7 @@ private fun AppRoot(profileRepository: ProfileRepository) {
 @Composable
 private fun destinationIcon(destination: DuchampDestination): ImageVector = when (destination) {
     DuchampDestination.GAME_MODE -> Icons.Filled.Gamepad
+    DuchampDestination.TASKS -> Icons.Filled.Apps
     DuchampDestination.MONITOR -> Icons.Filled.Dashboard
     DuchampDestination.SESSIONS -> Icons.Filled.History
     DuchampDestination.HEALTH -> Icons.Filled.BatteryFull

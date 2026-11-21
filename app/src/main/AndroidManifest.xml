@@ -4,7 +4,9 @@
     <application
         android:name=".DuchampApplication"
         android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
         android:label="duchamp"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Duchamp">
 

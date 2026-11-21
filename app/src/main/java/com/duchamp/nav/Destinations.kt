@@ -6,6 +6,7 @@ enum class DuchampDestination(
     val label: String,
 ) {
     GAME_MODE("gamemode", "Игра"),
+    TASKS("tasks", "Задачи"),
     MONITOR("monitor", "Панель"),
     SESSIONS("sessions", "Сеансы"),
     HEALTH("health", "Батарея"),
