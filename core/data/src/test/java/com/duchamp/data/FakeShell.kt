@@ -23,12 +23,12 @@ class FakeShell(
 
     /** Script a command to succeed with the given stdout. */
     fun succeed(command: String, stdout: String = "") {
-        script.add({ it == command } to { CommandResult.success(command, stdout) })
+        on({ it == command }, { CommandResult.success(command, stdout) })
     }
 
     /** Script a command to fail with the given stderr. */
     fun fail(command: String, stderr: String = "failed") {
-        script.add({ it == command } to { CommandResult.failure(stderr, command) })
+        on({ it == command }, { CommandResult.failure(stderr, command) })
     }
 
     /** Script any command matching [predicate] to return [result]. */
