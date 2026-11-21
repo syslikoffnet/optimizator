@@ -51,20 +51,16 @@ jobs:
         if: failure()
         run: |
           {
-            echo "::error::=== FAILURE: What went wrong (with context) ==="
-            grep -A 25 -E "What went wrong|Caused by|FAILURE: Build failed|BUILD FAILED" /tmp/gradle.log | tail -n 250 | while IFS= read -r line; do
-              printf '::error::%s\n' "$line"
-            done
-            echo "::error::=== FAILURE: compile/test errors ==="
-            grep -A 12 -E "^e: file|ComparisonFailure|AssertionError|expected:<|but was:<|> Task .* FAILED" /tmp/gradle.log | tail -n 200 | while IFS= read -r line; do
-              printf '::error::%s\n' "$line"
-            done
             echo "::error::=== FAILURE: test method failures ==="
-            grep -A 8 -E "[A-Za-z].* > .* FAILED|AssertionFailedError|ComparisonFailure" /tmp/gradle.log | tail -n 160 | while IFS= read -r line; do
+            grep -A 6 -E "[A-Za-z].* > .* FAILED|AssertionFailedError|ComparisonFailure|expected:<|but was:<" /tmp/gradle.log | tail -n 120 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
-            echo "::error::=== FAILURE: log tail ==="
-            tail -n 60 /tmp/gradle.log | while IFS= read -r line; do
+            echo "::error::=== FAILURE: compile errors ==="
+            grep -A 6 -E "^e: file|UNRESOLVED_REFERENCE|SMARTCAST|ARGUMENT_TYPE|RETURN_TYPE|CONST_VAL" /tmp/gradle.log | tail -n 120 | while IFS= read -r line; do
+              printf '::error::%s\n' "$line"
+            done
+            echo "::error::=== FAILURE: what went wrong ==="
+            grep -A 6 -E "What went wrong|Caused by|Execution failed for task|BUILD FAILED" /tmp/gradle.log | tail -n 80 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
           }
