@@ -1,5 +1,6 @@
 package com.duchamp.data.gamemode
 
+import com.duchamp.data.profile.GameProfile
 import com.duchamp.data.repo.JournalRepository
 import com.duchamp.data.repo.SessionStore
 import com.duchamp.data.tweak.Risk

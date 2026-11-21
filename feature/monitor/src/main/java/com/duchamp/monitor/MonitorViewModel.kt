@@ -8,11 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 
 /** A single 1 Hz telemetry sample for the live chart. */
@@ -34,7 +30,6 @@ class MonitorViewModel @Inject constructor(
     private val reader: DeviceReader,
     private val sessionRepository: SessionRepository,
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var job: Job? = null
 
     private val _samples = MutableStateFlow<List<TelemetrySample>>(emptyList())
@@ -46,7 +41,7 @@ class MonitorViewModel @Inject constructor(
     fun start(sessionId: Long?) {
         if (job?.isActive == true) return
         _active.value = true
-        job = scope.launch {
+        job = viewModelScope.launch {
             val max = 180
             while (isActive) {
                 runCatching {
@@ -103,7 +98,4 @@ class MonitorViewModel @Inject constructor(
         _samples.value = emptyList()
     }
 
-    fun onCleared() {
-        scope.cancel()
-    }
 }

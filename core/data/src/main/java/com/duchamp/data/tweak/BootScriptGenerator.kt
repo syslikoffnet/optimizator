@@ -36,7 +36,7 @@ fun generateBootScript(config: BootScriptConfig): String = buildString {
     appendLine()
     appendLine("log \"boot start\"")
     appendLine()
-    // 1. Battery bypass must never survive a reboot.
+    appendLine("# 1. Battery bypass must never survive a reboot.")
     appendLine("if echo '0 0' > /proc/mtk_battery_cmd/current_cmd 2>/dev/null; then")
     appendLine("  log \"battery bypass OFF: OK\"")
     appendLine("else")
@@ -45,6 +45,7 @@ fun generateBootScript(config: BootScriptConfig): String = buildString {
     appendLine()
     // 2. Resettable-but-permanent settings, applied only when the user chose to keep them.
     if (config.keepSwappiness) {
+        appendLine("# 2. Resettable-but-permanent settings, applied only when the user chose to keep them.")
         appendLine("if echo '${config.swappiness}' > /proc/sys/vm/swappiness 2>/dev/null; then")
         appendLine("  log \"swappiness ${config.swappiness}: OK\"")
         appendLine("else")
@@ -52,7 +53,7 @@ fun generateBootScript(config: BootScriptConfig): String = buildString {
         appendLine("fi")
         appendLine()
     }
-    // 3. Re-check permanent settings; re-apply on divergence.
+    appendLine("# 3. Re-check permanent settings; re-apply on divergence.")
     appendLine("check_setting() {")
     appendLine("  name=\$1; want=\$2; cur=\$(settings get global \$name 2>/dev/null | tr -d '\\n')")
     appendLine("  if [ \"\$cur\" = \"\$want\" ]; then")

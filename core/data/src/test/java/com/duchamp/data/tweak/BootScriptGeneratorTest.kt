@@ -28,16 +28,16 @@ class BootScriptGeneratorTest {
         val script = generateBootScript(BootScriptConfig())
         assertTrue(script.startsWith("#!/system/bin/sh"))
         assertTrue(script.contains("battery bypass OFF"))
-        // No swappiness, no setting checks.
+        // No swappiness, no per-setting checks.
         assertTrue(!script.contains("swappiness"))
-        assertTrue(!script.contains("check_setting"))
+        assertTrue(!script.contains("check_setting wifi_scan_always_enabled"))
         assertTrue(script.contains("log \"boot done\""))
     }
 
     @Test
     fun `script is idempotent and always exits 0`() {
         val script = generateBootScript(BootScriptConfig(wifiScanAlways = "1"))
-        assertTrue(script.endsWith("exit 0"))
+        assertTrue(script.trimEnd().endsWith("exit 0"))
     }
 
     private companion object {

@@ -23,4 +23,13 @@ interface CommandRunner {
     /** Convenience for commands whose output is parsed. */
     suspend fun capture(command: String, timeoutMs: Long = defaultTimeoutMs): CommandResult =
         run(command, timeoutMs)
+
+    /** True when the shell can execute as root (`id -u` returns 0). */
+    suspend fun isRootAvailable(): Boolean {
+        val result = run("id -u")
+        return result.success && result.stdout.trim() == "0"
+    }
+
+    /** Runs the canonical root probe and returns its raw result. */
+    suspend fun checkRoot(): CommandResult = run("id -u")
 }
