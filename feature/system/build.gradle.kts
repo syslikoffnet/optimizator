@@ -13,8 +13,8 @@ kotlin {
 
 android {
     namespace = "com.duchamp.system"
-    compileSdk = 36
-    buildToolsVersion = "36.0.0"
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         minSdk = 34

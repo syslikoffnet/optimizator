@@ -15,8 +15,8 @@ kotlin {
 
 android {
     namespace = "com.duchamp"
-    compileSdk = 36
-    buildToolsVersion = "36.0.0"
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         applicationId = "com.duchamp"
