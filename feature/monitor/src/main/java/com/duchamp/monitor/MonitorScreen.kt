@@ -99,6 +99,11 @@ fun MonitorScreen(
 private fun LineChartCard(title: String, values: List<Double>) {
     val producer = remember { CartesianChartModelProducer() }
     LaunchedEffect(values) {
+        // Vico requires at least one point per series; an empty series throws
+        // IllegalArgumentException("Series can't be empty."). Before the first real
+        // sample arrives, skip building the model so the chart shows its placeholder
+        // instead of crashing the whole screen.
+        if (values.isEmpty()) return@LaunchedEffect
         producer.runTransaction {
             lineModel {
                 series(
