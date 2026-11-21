@@ -131,4 +131,4 @@ fun parseLoadAverage(raw: String): Double? =
 fun freqGhz(freqKb: Long): Double = (freqKb / 1_000_000.0).round(1)
 
 private fun Double.round(digits: Int): Double =
-    Math.pow(10, digits).let { factor -> (this * factor).roundToInt() / factor }
+    Math.pow(10.0, digits.toDouble()).let { factor -> (this * factor).roundToInt() / factor }

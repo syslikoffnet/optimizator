@@ -24,7 +24,7 @@ object DevicePaths {
     const val SWAPPINESS = "/proc/sys/vm/swappiness"
 
     // --- CPU / GPU ---
-    const val CPU_POLICIES = listOf("policy0", "policy4", "policy7")
+    val CPU_POLICIES = listOf("policy0", "policy4", "policy7")
     const val GPU_FREQ_STATUS = "/proc/gpufreqv2/gpufreq_status"
     const val GPU_GED_FREQ = "/sys/kernel/ged/hal/current_freqency"
     const val GPU_GED_UTIL = "/sys/kernel/ged/hal/gpu_utilization"

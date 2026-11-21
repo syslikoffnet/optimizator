@@ -23,8 +23,8 @@ private val VOLTAGE = Regex("""voltage:\s*(\d+)""")
 private val TEMP = Regex("""temperature:\s*(\d+)""")
 
 fun parseBatteryDumpsys(raw: String): BatteryDumpsys? {
-    val ac = AC_POWERED.find(raw)?.groupValues?.get(1)?.toLowerCase()
-    val usb = USB_POWERED.find(raw)?.groupValues?.get(1)?.toLowerCase()
+    val ac = AC_POWERED.find(raw)?.groupValues?.get(1)?.lowercase()
+    val usb = USB_POWERED.find(raw)?.groupValues?.get(1)?.lowercase()
     val status = STATUS.find(raw)?.groupValues?.get(1)?.toIntOrNull()
     val level = LEVEL.find(raw)?.groupValues?.get(1)?.toIntOrNull()
     val voltage = VOLTAGE.find(raw)?.groupValues?.get(1)?.toIntOrNull()
@@ -60,7 +60,7 @@ fun parsePowerEstimate(raw: String): PowerEstimate? {
     }
     val perUid = mutableListOf<UidPower>()
     for (m in UID_LINE.findAll(raw)) {
-        perUid.add(UidPower(uid = m.groupValues[1], mAh = m.groupValues[2].toDoubleOrNull() ?: 0.0))
+        perUid.add(UidPower(uid = m.groupValues[1], mAh = m.groupValues[2].toDoubleOrNull() ?: 0.0, screenHours = null))
     }
     return PowerEstimate(
         capacityMah = capacity,
