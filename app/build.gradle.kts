@@ -96,7 +96,6 @@ android {
 
     lint {
         abortOnError = false
-        checkReleaseLint = false
     }
 
     packaging {
@@ -114,7 +113,7 @@ android {
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.forEach { output ->
-            output.outputFileName = "duchamp-${variant.versions.versionName.get()}.apk"
+            output.outputFileName = "duchamp-${variant.versionName.get()}.apk"
         }
     }
 }
