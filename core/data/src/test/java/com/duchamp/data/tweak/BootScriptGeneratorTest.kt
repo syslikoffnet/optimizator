@@ -46,10 +46,10 @@ class BootScriptGeneratorTest {
 LOG=/data/adb/duchamp/boot.log
 mkdir -p /data/adb/duchamp
 
-log() { echo "[duchamp] \$(date '+%Y-%m-%d %H:%M:%S') \$1" >> \$LOG; }
+log() { echo "[duchamp] $(date '+%Y-%m-%d %H:%M:%S') $1" >> ${'$'}LOG; }
 
 # Wait for boot to complete and let HyperOS settle (~20s) before touching values.
-while [ "\$(getprop sys.boot_completed)" != "1" ]; do sleep 2; done
+while [ "$(getprop sys.boot_completed)" != "1" ]; do sleep 2; done
 sleep 20
 
 log "boot start"
@@ -70,18 +70,18 @@ fi
 
 # 3. Re-check permanent settings; re-apply on divergence.
 check_setting() {
-  name=\$1; want=\$2; cur=\$(settings get global \$name 2>/dev/null | tr -d '\n')
-  if [ "\$cur" = "\$want" ]; then
-    log "\$name=\$want: OK"
+  name=$1; want=$2; cur=$(settings get global ${'$'}name 2>/dev/null | tr -d '\n')
+  if [ "${'$'}cur" = "${'$'}want" ]; then
+    log "${'$'}name=${'$'}want: OK"
   else
-    settings put global \$name \$want 2>/dev/null && log "\$name=\$want: re-applied" || log "\$name=\$want: FAIL"
+    settings put global ${'$'}name ${'$'}want 2>/dev/null && log "${'$'}name=${'$'}want: re-applied" || log "${'$'}name=${'$'}want: FAIL"
   fi
 }
-check_setting wifi_scan_always_enabled \$1
-check_setting ble_scan_always_enabled \$1
-check_setting window_animation_scale \$0.5
-check_setting transition_animation_scale \$0.5
-check_setting animator_animation_scale \$0.5
+check_setting wifi_scan_always_enabled $1
+check_setting ble_scan_always_enabled $1
+check_setting window_animation_scale $0.5
+check_setting transition_animation_scale $0.5
+check_setting animator_animation_scale $0.5
 
 log "boot done"
 exit 0
