@@ -51,8 +51,8 @@ fun SessionsScreen(
             SectionLabel("ИСТОРИЯ СЕАНСОВ")
             Spacer(Modifier.height(16.dp))
 
-            if (report != null) {
-                ReportCard(report) { viewModel.closeReport() }
+            report?.let { r ->
+                ReportCard(r) { viewModel.closeReport() }
                 Spacer(Modifier.height(24.dp))
             }
 
