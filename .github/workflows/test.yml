@@ -1,0 +1,13 @@
+name: Test workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: echo "test workflow ran ok"
