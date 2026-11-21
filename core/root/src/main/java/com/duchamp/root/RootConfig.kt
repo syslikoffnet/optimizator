@@ -8,11 +8,13 @@ import com.github.topjohnwu.libsu.core.Shell
  */
 object RootConfig {
 
-    private val configured = false
+    @Volatile
+    private var configured = false
 
     @Synchronized
     fun configure(debug: Boolean = false) {
         if (configured) return
+        configured = true
         Shell.enableVerboseLogging = debug
         Shell.setDefaultBuilder(
             Shell.Builder.create()

@@ -141,7 +141,7 @@ class GameModeEngine(
             skipped = skipped,
             failed = failed,
             frozen = frozen,
-            killRequested = profile.killPackages.toList(),
+            killRequested = profile.closePackages.toList(),
             commandFailures = commandFailures,
             durationMs = clock() - startedAt,
         )

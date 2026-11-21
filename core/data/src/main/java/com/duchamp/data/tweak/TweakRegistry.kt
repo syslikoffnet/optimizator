@@ -1,6 +1,6 @@
 package com.duchamp.data.tweak
 
-import com.duchamp.data.device.DeviceReader
+import com.duchamp.device.DeviceReader
 import com.duchamp.data.profile.ProfileRepository
 import com.duchamp.data.tweak.impl.AnimatorAnimationTweak
 import com.duchamp.data.tweak.impl.BatteryBypassTweak
