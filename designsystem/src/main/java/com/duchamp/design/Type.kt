@@ -3,9 +3,9 @@ package com.duchamp.design
 import androidx.compose.material3.Typography
 import androidx.compose.material3.TextStyle
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.FontFamily
-import androidx.compose.ui.text.FontWeight
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 // Onest (UI, Cyrillic-capable) and JetBrains Mono (telemetry, tabular figures).
