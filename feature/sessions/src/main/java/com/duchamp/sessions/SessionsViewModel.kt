@@ -17,7 +17,7 @@ data class SessionReport(
     val samples: List<MetricSampleEntity>,
     val events: List<EventMarkerEntity>,
 ) {
-    val durationMin: Int get() = (session.durationSec / 60).coerceAtLeast(0)
+    val durationMin: Int get() = (session.durationSec / 60).coerceAtLeast(0).toInt()
 
     val avgCpuMhz: Double
         get() = samples.map { it.cpu0FreqKb / 1000.0 }.average().takeIf { samples.isNotEmpty() } ?: 0.0
