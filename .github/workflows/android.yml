@@ -52,17 +52,18 @@ jobs:
           if-no-files-found: ignore
 
       - name: Report build failure as PR comment
-        if: failure() && github.event.pull_request.number != ''
+        if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number || 1 }}
         run: |
           {
-            echo "## Build failed — Gradle output tail"
+            echo "## Build failed - Gradle output tail"
             echo '```'
-            tail -n 250 /tmp/gradle.log
+            tail -n 300 /tmp/gradle.log
             echo '```'
           } > /tmp/report.md
-          gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/report.md
+          gh pr comment "$PR_NUMBER" --body-file /tmp/report.md
 
       - name: Upload release APK
         uses: actions/upload-artifact@v4
