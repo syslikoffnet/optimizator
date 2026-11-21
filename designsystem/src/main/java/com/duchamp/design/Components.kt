@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -53,7 +54,7 @@ fun StatusChip(
         shape = ChipShape,
         color = Color.Transparent,
         contentColor = kind.color(),
-        border = BorderStroke(1.dp, kind.color().copy(alpha = 0.4f)),
+        border = BorderStroke(1.dp, SolidColor(kind.color().copy(alpha = 0.4f))),
         modifier = modifier,
     ) {
         Text(
@@ -103,7 +104,7 @@ fun DataCard(
         shape = CardShape,
         color = DuchampColor.Surface,
         contentColor = DuchampColor.TextPrimary,
-        border = BorderStroke(1.dp, DuchampColor.Hairline),
+        border = BorderStroke(1.dp, SolidColor(DuchampColor.Hairline)),
         modifier = modifier,
     ) {
         content()
@@ -136,7 +137,7 @@ fun Pill(
         shape = ChipShape,
         color = DuchampColor.SurfaceRaised,
         contentColor = DuchampColor.TextSecondary,
-        border = BorderStroke(1.dp, DuchampColor.Hairline),
+        border = BorderStroke(1.dp, SolidColor(DuchampColor.Hairline)),
         modifier = modifier,
     ) {
         Text(
@@ -162,5 +163,5 @@ fun DotIndicator(
     color: Color,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.size(6.dp).border(BorderStroke(1.dp, color), ChipShape), contentAlignment = Alignment.Center)
+    Box(modifier = modifier.size(6.dp).border(BorderStroke(1.dp, SolidColor(color)), ChipShape), contentAlignment = Alignment.Center)
 }

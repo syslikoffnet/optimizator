@@ -51,14 +51,14 @@ jobs:
         if: failure()
         run: |
           {
-            echo "::error::Gradle build failed. Output tail:"
-            grep -E "e: |error:|FAILED|FAILURE:|What went wrong|Caused by" /tmp/gradle.log | tail -n 120 | while IFS= read -r line; do
+            echo "::error::Gradle build failed. Error blocks:"
+            grep -A 12 -E "^e: file|^e: " /tmp/gradle.log | tail -n 200 | while IFS= read -r line; do
               printf '::error::%s\n' "$line"
             done
-            echo "::error::Full log: tail -n 400 /tmp/gradle.log"
-            echo '---gradle log tail---'
-            tail -n 400 /tmp/gradle.log
-            echo '---end gradle log tail---'
+            echo "::error::Summary lines:"
+            grep -E "FAILED|FAILURE:|What went wrong|Caused by" /tmp/gradle.log | tail -n 40 | while IFS= read -r line; do
+              printf '::error::%s\n' "$line"
+            done
           }
 
       - name: Upload release APK

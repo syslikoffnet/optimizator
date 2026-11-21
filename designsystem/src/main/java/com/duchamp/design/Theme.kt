@@ -1,13 +1,13 @@
 package com.duchamp.design
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialExpressiveTheme
-import androidx.compose.material3.MotionScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 
 /**
- * Top-level theme. Material 3 Expressive with the expressive motion scheme for the "hero"
- * moments (the main button morph). Falls back to the standard M3 color/typography tokens.
+ * Top-level theme. Material 3 with the app's color/typography/shape tokens.
+ * (The Material 3 Expressive API is internal in material3 1.5.0, so we use the
+ * standard MaterialTheme here; the visual tokens stay the same.)
  */
 @Composable
 fun DuchampTheme(
@@ -15,15 +15,10 @@ fun DuchampTheme(
     content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) DuchampDarkColors else DuchampLightColors
-    MaterialExpressiveTheme(
+    MaterialTheme(
         colorScheme = colors,
-        motionScheme = MotionScheme.expressive(),
         shapes = DuchampShapes,
         typography = DuchampTypography,
         content = content,
     )
 }
-
-/** Reference to the expressive motion scheme, for use in custom animations. */
-@Composable
-fun expressiveMotion(): MotionScheme = MotionScheme.expressive()

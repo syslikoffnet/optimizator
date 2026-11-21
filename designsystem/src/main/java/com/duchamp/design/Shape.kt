@@ -18,7 +18,4 @@ val DuchampShapes = Shapes(
     medium = CardShape,
     large = SurfaceShape,
     extraLarge = RoundedCornerShape(32.dp),
-    largeIncreased = RoundedCornerShape(28.dp),
-    extraLargeIncreased = RoundedCornerShape(36.dp),
-    extraExtraLarge = RoundedCornerShape(44.dp),
 )
