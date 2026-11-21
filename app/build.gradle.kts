@@ -110,10 +110,12 @@ android {
 }
 
 // APK file name: duchamp-<versionName>.apk
+// (versionName is "0.1.<runNumber>" from defaultConfig above; avoid variant API version
+// access, which changed in AGP 9, and reuse the script-local runNumber value.)
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.forEach { output ->
-            output.outputFileName = "duchamp-${variant.versionName.get()}.apk"
+            output.outputFileName = "duchamp-0.1.$runNumber.apk"
         }
     }
 }
