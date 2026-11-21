@@ -8,9 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull_requests: write
     steps:
       - name: Check
+        permissions:
+          contents: write
+          pull_requests: write
         run: echo "android diag workflow ran ok"
