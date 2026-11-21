@@ -63,7 +63,7 @@ fun SessionsScreen(
                     items(sessions, key = { it.id }) { session ->
                         SessionRow(
                             session = session,
-                            onClick = { viewModel.open(session.id) },
+                            onClick = { scope.launch { viewModel.open(session.id) } },
                         )
                     }
                 }
